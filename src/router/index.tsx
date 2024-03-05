@@ -1,6 +1,6 @@
+import App from '@/App'
 import React, { lazy } from 'react'
-import { Navigate } from 'react-router-dom'
-import type { RouteObject } from 'react-router-dom'
+import { Navigate, createHashRouter } from 'react-router-dom'
 
 const Discover = lazy(() => import('@/views/discover'))
 const Recommend = lazy(() => import('@/views/discover/components/recommend'))
@@ -14,57 +14,62 @@ const Mine = lazy(() => import('@/views/mine'))
 const Focus = lazy(() => import('@/views/focus'))
 const Download = lazy(() => import('@/views/download'))
 
-const routes: RouteObject[] = [
+const router = createHashRouter([
   {
-    path: '/',
-    element: <Navigate to="/discover" />
-  },
-  {
-    path: '/discover',
-    element: <Discover />,
+    element: <App />,
     children: [
       {
+        path: '/',
+        element: <Navigate to="/discover" />
+      },
+      {
         path: '/discover',
-        element: <Navigate to="/discover/recommend" />
+        element: <Discover />,
+        children: [
+          {
+            path: '/discover',
+            element: <Navigate to="/discover/recommend" />
+          },
+          {
+            path: '/discover/recommend',
+            element: <Recommend />
+          },
+          {
+            path: '/discover/ranking',
+            element: <Ranking />
+          },
+          {
+            path: '/discover/songs',
+            element: <Songs />
+          },
+          {
+            path: '/discover/djradio',
+            element: <Djradio />
+          },
+          {
+            path: '/discover/artist',
+            element: <Artist />
+          },
+          {
+            path: '/discover/album',
+            element: <Album />
+          }
+        ]
       },
       {
-        path: '/discover/recommend',
-        element: <Recommend />
+        path: '/mine',
+        element: <Mine />
       },
       {
-        path: '/discover/ranking',
-        element: <Ranking />
+        path: '/focus',
+        element: <Focus />
       },
       {
-        path: '/discover/songs',
-        element: <Songs />
-      },
-      {
-        path: '/discover/djradio',
-        element: <Djradio />
-      },
-      {
-        path: '/discover/artist',
-        element: <Artist />
-      },
-      {
-        path: '/discover/album',
-        element: <Album />
+        path: '/download',
+        element: <Download />
       }
     ]
-  },
-  {
-    path: '/mine',
-    element: <Mine />
-  },
-  {
-    path: '/focus',
-    element: <Focus />
-  },
-  {
-    path: '/download',
-    element: <Download />
   }
-]
+])
 
-export default routes
+export default router

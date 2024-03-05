@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react'
-import { Link, useRoutes } from 'react-router-dom'
-import routes from './router'
+import { Link, Outlet } from 'react-router-dom'
 
 function App() {
   return (
@@ -12,7 +11,7 @@ function App() {
         <Link to="/download">下载客户端</Link>
       </div>
       <Suspense fallback="">
-        <div className="main">{useRoutes(routes)}</div>
+        <Outlet />
       </Suspense>
     </div>
   )
